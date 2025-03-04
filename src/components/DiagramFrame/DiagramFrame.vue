@@ -1,19 +1,19 @@
 <template>
   <div
     ref="export"
-    class="zenuml bg-skin-canvas flex flex-col w-full h-fit"
+    class="zenuml bg-skin-canvas flex flex-col w-full h-full"
     :class="theme"
   >
     <!-- We have enabled important: ".zenuml" for tailwind.
-          1. Don't use inline-block as class name here. Other clients may not have .zenuml at ancestor level.
-          2. .zenuml is used to make sure tailwind css takes effect.
-     -->
+        1. Don't use inline-block as class name here. Other clients may not have .zenuml at ancestor level.
+        2. .zenuml is used to make sure tailwind css takes effect.
+      -->
     <!-- pb-8 is to offset pt-8 in SeqDiagram component
-        .whitespace-nowrap will be inherited by all children
-     -->
+      .whitespace-nowrap will be inherited by all children
+    -->
     <debug />
     <div
-      class="frame text-skin-base bg-skin-frame border-skin-frame relative origin-top-left whitespace-nowrap border rounded"
+      class="frame text-skin-base bg-skin-frame border-skin-frame relative origin-top-left whitespace-nowrap border rounded h-full flex flex-col justify-between"
     >
       <div ref="content">
         <div
@@ -55,7 +55,6 @@
             >
               <Icon name="tip" icon-class="filter grayscale w-4 h-4" />
             </button>
-            <ThemeSelect v-if="enableMultiTheme" />
             <div class="flex items-center">
               <input
                 type="checkbox"
@@ -64,25 +63,27 @@
                 :checked="numbering"
                 @input="toggleNumbering(!numbering)"
               />
-              <label
-                for="order-display"
-                title="Numbering the diagram"
-                class="select-none"
-              >
-                <Icon name="numbering" icon-class="w-6 h-6" />
-              </label>
+              <h1 class="text-xs">Show Numbering</h1>
             </div>
-          </div>
-          <div class="zoom-controls flex hide-export gap-1">
-            <button class="zoom-in" @click="zoomIn()">
-              <Icon name="zoom-in" icon-class="w-4 h-4" />
-            </button>
-            <label class="w-12 block text-center"
-              >{{ Number(scale * 100).toFixed(0) }}%</label
-            >
-            <button class="zoom-out" @click="zoomOut()">
-              <Icon name="zoom-out" icon-class="w-4 h-4" />
-            </button>
+            <div class="zoom-controls flex hide-export gap-1">
+              <button class="zoom-in" @click="zoomIn()">
+                <Icon name="zoom-in" icon-class="w-4 h-4" />
+              </button>
+              <button class="zoom-out" @click="zoomOut()">
+                <Icon name="zoom-out" icon-class="w-4 h-4" />
+              </button>
+              <label class="w-12 block text-center text-xs"
+                >{{ Number(scale * 100).toFixed(0) }}%</label
+              >
+            </div>
+            <div class="export-controls flex items-center">
+              <button
+                class="export-jpeg text-xs bg-blue-500 rounded-lg color-white px-2 py-1"
+                @click="toJpeg()"
+              >
+                Export JPEG
+              </button>
+            </div>
           </div>
         </template>
       </div>
@@ -99,7 +100,6 @@ import TipsDialog from "./Tutorial/TipsDialog.vue";
 import WidthProvider from "./Positioning/WidthProvider.vue";
 import * as htmlToImage from "html-to-image";
 import Debug from "./Debug/Debug.vue";
-import ThemeSelect from "./ThemeSelect.vue";
 import Icon from "@/components/Icon/Icon.vue";
 import { RenderMode } from "@/store/Store";
 
@@ -173,7 +173,6 @@ export default {
       });
     },
     toJpeg() {
-      // It does not render the 'User' svg icon.
       return htmlToImage.toJpeg(this.$refs["export"], {
         backgroundColor: "white",
         filter: (node) => {
@@ -245,7 +244,6 @@ export default {
     TipsDialog,
     DiagramTitle,
     SeqDiagram,
-    ThemeSelect,
   },
 };
 </script>
