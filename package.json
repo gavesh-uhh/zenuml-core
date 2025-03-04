@@ -7,8 +7,8 @@
     "url": "https://github.com/mermaid-js/zenuml-core"
   },
   "scripts": {
-    "dev": "vite dev --port 8080 --host 0.0.0.0",
-    "preview": "vite preview --port 8080 --host",
+    "dev": "vite dev",
+    "preview": "vite preview --port 5230 --host",
     "build:site": "vite build",
     "build:gh-pages": "vite build --mode gh-pages",
     "build": "vite build -c vite.config.lib.js",
@@ -121,5 +121,14 @@
   },
   "volta": {
     "node": "18.12.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js",
+      "cypress",
+      "esbuild",
+      "vue-demi"
+    ]
   }
 }

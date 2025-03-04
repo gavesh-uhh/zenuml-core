@@ -24,6 +24,13 @@
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css"
+      integrity="sha512-gFMl3u9d0xt3WR8ZeW05MWm3yZ+ZfgsBVXLSOiFz2xeVrZ8Neg0+V1kkRIo9LikyA/T9HuS91kDfc2XWse0K0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.1/lib/codemirror.min.js"></script>
     <link
       rel="stylesheet"
@@ -35,93 +42,66 @@
     <title>ZenUML Core Demo</title>
     <style>
       .CodeMirror {
-        /* Set height, width, borders, and global font properties here */
         font-family: monospace;
         font-size: 13px;
-        height: 1000px;
+        padding: 0;
+        margin: 0;
       }
-
       .zenuml .CodeMirror .CodeMirror-cursor {
         border-color: #000;
         border-left-width: 1px;
-      }
-
-      .grid {
-        display: grid;
-      }
-
-      .grid-cols-6 {
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-      }
-
-      .col-span-2 {
-        grid-column: span 2 / span 2;
-      }
-
-      .col-span-4 {
-        grid-column: span 4 / span 4;
       }
     </style>
   </head>
 
   <body>
-    <noscript>
-      <strong
-        >We're sorry but vue-sequence doesn't work properly without JavaScript
-        enabled. Please enable it to continue.</strong
-      >
-    </noscript>
-    <div class="m-1 grid grid-cols-6" id="diagram1">
-      <div class="col-span-2">
-        <textarea
-          id="text"
-          class="col-span-1 m-1 border-2"
-          cols="30"
-          rows="200"
-        ></textarea>
+    <div style="display: flex; flex-direction: row; width: 100%; height: 100vh">
+      <div style="min-width: 400px; height: 100%">
+        <textarea id="text" style="height: 100%"></textarea>
       </div>
-      <div class="col-span-4">
-        <pre class="zenuml" style="margin: 0"></pre>
+      <div style="flex: 1">
+        <pre class="zenuml" style="height: fit-content"></pre>
       </div>
     </div>
-    <script type="module">
-      import { waitUntil, debounce } from "./src/utils.ts";
-      import { createConfig } from "./src/config.ts";
-
-      const editor = CodeMirror.fromTextArea(document.getElementById("text"), {
-        lineNumbers: true,
-        singleCursorHeightPerLine: false,
-      });
-
-      const updateDiagram = debounce((content) => {
-        const config = createConfig({
-          onContentChange: (code) => editor.setValue(code),
-        });
-
-        window.zenUml.render(content, config).then((r) => {
-          window.parentLogger
-            .child({ name: "index.html" })
-            .debug("render resolved", r);
-        });
-      }, 500);
-
-      editor.on("change", function (cm) {
-        waitUntil(
-          () => window.zenUml,
-          () => {
-            updateDiagram(cm.getValue());
-            // Save to localStorage
-            localStorage.setItem("zenuml-cm-code", cm.getValue());
-          },
-        );
-      });
-
-      // Load saved code from localStorage
-      const savedCode = localStorage.getItem("zenuml-cm-code");
-      if (savedCode) {
-        editor.setValue(savedCode);
-      }
-    </script>
-    <script type="module" src="./src/main.ts"></script>
   </body>
+  <script type="module">
+    import { waitUntil, debounce } from "./src/utils.ts";
+    import { createConfig } from "./src/config.ts";
+
+    const editor = CodeMirror.fromTextArea(document.getElementById("text"), {
+      lineNumbers: true,
+      singleCursorHeightPerLine: false,
+      theme: "dracula",
+    });
+
+    const updateDiagram = debounce((content) => {
+      const config = createConfig({
+        onContentChange: (code) => editor.setValue(code),
+      });
+
+      window.zenUml.render(content, config).then((r) => {
+        window.parentLogger
+          .child({ name: "index.html" })
+          .debug("render resolved", r);
+      });
+    }, 500);
+
+    editor.on("change", function (cm) {
+      waitUntil(
+        () => window.zenUml,
+        () => {
+          updateDiagram(cm.getValue());
+          // Save to localStorage
+          localStorage.setItem("zenuml-cm-code", cm.getValue());
+        },
+      );
+    });
+
+    // Load saved code from localStorage
+    const savedCode = localStorage.getItem("zenuml-cm-code");
+    if (savedCode) {
+      editor.setValue(savedCode);
+    }
+  </script>
+  <script type="module" src="./src/main.ts"></script>
 </html>

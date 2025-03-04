@@ -7,6 +7,20 @@
   src: url("/fonts/MS Sans Serif.ttf") format("truetype");
 }
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.debug {
+  outline: 1px solid red;
+}
+
+body {
+  overflow: hidden;
+}
+
 .zenuml {
   font-family: Helvetica, Verdana, serif;
   font-size: 16px;
@@ -158,7 +172,8 @@
 
     /* Participant */
     --color-bg-participant: #44475a;
-    --color-text-participant: #f8f8f2; /* Participant name, stereotype */
+    --color-text-participant: #f8f8f2;
+    /* Participant name, stereotype */
     --color-border-participant: #cccccc;
 
     /* Messages */
@@ -170,7 +185,8 @@
 
     /* Fragment */
     --color-bg-fragment-header: #44475a;
-    --color-text-fragment: #8be9fd; /* Fragment Headers and conditions */
+    --color-text-fragment: #8be9fd;
+    /* Fragment Headers and conditions */
     --color-border-fragment: #cccccc;
 
     /* Occurrence */
@@ -194,8 +210,10 @@
 
     /* Participant */
     --color-bg-participant: #deecfb;
-    --color-text-participant: #032c72; /* Participant name, stereotype */
-    --color-border-participant: #032c72; /* Participant border and Lifeline */
+    --color-text-participant: #032c72;
+    /* Participant name, stereotype */
+    --color-border-participant: #032c72;
+    /* Participant border and Lifeline */
 
     /* Messages */
     --color-text-message: #032c72;
@@ -206,7 +224,8 @@
 
     /* Fragment */
     --color-bg-fragment-header: #f0f0f0;
-    --color-text-fragment: #032c72; /* Fragment Headers and conditions */
+    --color-text-fragment: #032c72;
+    /* Fragment Headers and conditions */
     --color-border-fragment: #032c72;
 
     /* Occurrence */
@@ -230,8 +249,10 @@
 
     /* Participant */
     --color-bg-participant: #f3f5f7;
-    --color-text-participant: #182e27; /* Participant name, stereotype */
-    --color-border-participant: #182e27; /* Participant border and Lifeline */
+    --color-text-participant: #182e27;
+    /* Participant name, stereotype */
+    --color-border-participant: #182e27;
+    /* Participant border and Lifeline */
 
     /* Messages */
     --color-text-message: #030809;
@@ -242,7 +263,8 @@
 
     /* Fragment */
     --color-bg-fragment-header: #f0f0f0;
-    --color-text-fragment: #182e27; /* Fragment Headers and conditions */
+    --color-text-fragment: #182e27;
+    /* Fragment Headers and conditions */
     --color-border-fragment: #344337;
 
     /* Occurrence */
@@ -266,8 +288,10 @@
 
     /* Participant */
     --color-bg-participant: #f3f5f7;
-    --color-text-participant: #000000; /* Participant name, stereotype */
-    --color-border-participant: #344337; /* Participant border and Lifeline */
+    --color-text-participant: #000000;
+    /* Participant name, stereotype */
+    --color-border-participant: #344337;
+    /* Participant border and Lifeline */
 
     /* Messages */
     --color-text-message: #000000;
@@ -278,7 +302,8 @@
 
     /* Fragment */
     --color-bg-fragment-header: #ee141f;
-    --color-text-fragment: #ffffff; /* Fragment Headers and conditions */
+    --color-text-fragment: #ffffff;
+    /* Fragment Headers and conditions */
     --color-border-fragment: #ee141f;
 
     /* Occurrence */
@@ -306,8 +331,10 @@
 
     /* Participant */
     --color-bg-participant: #aacb51;
-    --color-text-participant: #000000; /* Participant name, stereotype */
-    --color-border-participant: #344337; /* Participant border and Lifeline */
+    --color-text-participant: #000000;
+    /* Participant name, stereotype */
+    --color-border-participant: #344337;
+    /* Participant border and Lifeline */
 
     /* Messages */
     --color-text-message: #12522f;
@@ -318,7 +345,8 @@
 
     /* Fragment */
     --color-bg-fragment-header: #aacb51;
-    --color-text-fragment: #12522f; /* Fragment Headers and conditions */
+    --color-text-fragment: #12522f;
+    /* Fragment Headers and conditions */
     --color-border-fragment: #049e50;
 
     /* Occurrence */
@@ -342,8 +370,10 @@
 
     /* Participant */
     --color-bg-participant: #fcfdf8;
-    --color-text-participant: #00abd8; /* Participant name, stereotype */
-    --color-border-participant: #00abd8; /* Participant border and Lifeline */
+    --color-text-participant: #00abd8;
+    /* Participant name, stereotype */
+    --color-border-participant: #00abd8;
+    /* Participant border and Lifeline */
 
     /* Messages */
     --color-text-message: #42a4e0;
@@ -354,7 +384,8 @@
 
     /* Fragment */
     --color-bg-fragment-header: #42a4e0;
-    --color-text-fragment: #006e9c; /* Fragment Headers and conditions */
+    --color-text-fragment: #006e9c;
+    /* Fragment Headers and conditions */
     --color-border-fragment: #089fd8;
 
     /* Occurrence */
@@ -377,15 +408,19 @@
 
     /* Participant */
     --color-bg-participant: 195, 0, 0;
-    --color-text-participant: #ffffff; /* Participant name, stereotype */
-    --color-border-participant: #c30000; /* Participant border and Lifeline */
+    --color-text-participant: #ffffff;
+    /* Participant name, stereotype */
+    --color-border-participant: #c30000;
+    /* Participant border and Lifeline */
 
     /* Messages */
     --color-text-message: #c30000;
 
     /* Fragment */
-    --color-bg-fragment-header: #c30000; /* Fragment Headers */
-    --color-text-fragment-header: #ffffff; /* Fragment Headers */
+    --color-bg-fragment-header: #c30000;
+    /* Fragment Headers */
+    --color-text-fragment-header: #ffffff;
+    /* Fragment Headers */
   }
 
   .theme-google {
@@ -406,8 +441,10 @@
 
     /* Participant */
     --color-bg-participant: var(--color-red-google);
-    --color-text-participant: #ffffff; /* Participant name, stereotype */
-    --color-border-participant: #4285f4; /* Participant border and Lifeline */
+    --color-text-participant: #ffffff;
+    /* Participant name, stereotype */
+    --color-border-participant: #4285f4;
+    /* Participant border and Lifeline */
 
     /* Messages */
     --color-text-message: var(--color-red-google);
@@ -418,7 +455,8 @@
 
     /* Fragment */
     --color-bg-fragment-header: var(--color-green-google);
-    --color-text-fragment: #ffffff; /* Fragment Headers and conditions */
+    --color-text-fragment: #ffffff;
+    /* Fragment Headers and conditions */
     --color-border-fragment: #4285f4;
 
     /* Occurrence */

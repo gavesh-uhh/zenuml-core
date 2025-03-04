@@ -1,5 +1,7 @@
 <template>
-  <div class="title text-skin-title text-base font-semibold">{{ title }}</div>
+  <div class="title ml-2 text-skin-title text-base font-semibold">
+    {{ title ? title : "No Title" }}
+  </div>
 </template>
 
 <script>

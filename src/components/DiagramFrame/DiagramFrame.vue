@@ -1,8 +1,7 @@
 <template>
   <div
     ref="export"
-    class="zenuml p-1 bg-skin-canvas"
-    style="display: inline-block"
+    class="zenuml bg-skin-canvas flex flex-col w-full h-fit"
     :class="theme"
   >
     <!-- We have enabled important: ".zenuml" for tailwind.
@@ -14,7 +13,7 @@
      -->
     <debug />
     <div
-      class="frame text-skin-base bg-skin-frame border-skin-frame relative m-1 origin-top-left whitespace-nowrap border rounded"
+      class="frame text-skin-base bg-skin-frame border-skin-frame relative origin-top-left whitespace-nowrap border rounded"
     >
       <div ref="content">
         <div
@@ -26,7 +25,6 @@
           <div class="right flex-grow flex justify-between">
             <diagram-title :context="title" />
             <!-- Knowledge: how to vertically align a svg icon. -->
-            <privacy class="hide-export flex items-center" />
           </div>
         </div>
         <div>
@@ -47,7 +45,7 @@
         />
       </div>
       <div
-        class="footer text-skin-control bg-skin-title px-4 py-1 flex justify-between items-center gap-3"
+        class="footer text-skin-control bg-skin-title px-4 py-1 flex justify-between items-center gap-3 mt-2"
       >
         <template v-if="mode === RenderMode.Dynamic">
           <div class="flex items-center gap-3 color-base">
@@ -86,12 +84,6 @@
               <Icon name="zoom-out" icon-class="w-4 h-4" />
             </button>
           </div>
-          <a
-            target="_blank"
-            href="https://zenuml.com"
-            class="brand text-xs hover:underline"
-            >ZenUML.com</a
-          >
         </template>
       </div>
       <width-provider />
@@ -101,7 +93,6 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from "vuex";
-import Privacy from "./Privacy/Privacy.vue";
 import DiagramTitle from "./DiagramTitle/DiagramTitle.vue";
 import SeqDiagram from "./SeqDiagram/SeqDiagram.vue";
 import TipsDialog from "./Tutorial/TipsDialog.vue";
@@ -254,7 +245,6 @@ export default {
     TipsDialog,
     DiagramTitle,
     SeqDiagram,
-    Privacy,
     ThemeSelect,
   },
 };
