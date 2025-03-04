@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import createVuePlugin from "@vitejs/plugin-vue";
 import { execSync } from "child_process";
 import svgLoader from "vite-svg-loader";
-import { readFileSync } from "fs";
+import { readFileSync, readdirSync } from "fs";
 
 process.env.VITE_APP_GIT_HASH = process.env.DOCKER
   ? ""
@@ -19,12 +19,8 @@ const packageJson = JSON.parse(
 
 function getCypressHtmlFiles() {
   const cypressFolder = resolve(__dirname, "cy");
-  const strings = execSync(`find ${cypressFolder} -name '*.html'`)
-    .toString()
-    .split("\n");
-  // remove empty string
-  strings.pop();
-  return strings;
+  const files = readdirSync(cypressFolder);
+  return files.filter((file) => file.endsWith(".html"));
 }
 
 const cypressHtmlFiles = getCypressHtmlFiles();
