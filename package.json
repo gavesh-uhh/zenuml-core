@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "preview": "vite preview --port 5230 --host",
+    "preview": "vite preview",
     "build:site": "vite build",
     "build:gh-pages": "vite build --mode gh-pages",
     "build": "vite build -c vite.config.lib.js",

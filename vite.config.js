@@ -19,18 +19,24 @@ const packageJson = JSON.parse(
 
 function getCypressHtmlFiles() {
   const cypressFolder = resolve(__dirname, "cy");
-  const files = readdirSync(cypressFolder);
-  return files.filter((file) => file.endsWith(".html"));
+  try {
+    const files = readdirSync(cypressFolder);
+    return files
+      .filter((file) => file.endsWith(".html"))
+      .map((file) => resolve(cypressFolder, file));
+  } catch (err) {
+    console.err(err);
+    return [];
+  }
 }
-
 const cypressHtmlFiles = getCypressHtmlFiles();
 console.log(cypressHtmlFiles);
 
 export default defineConfig(({ mode }) => ({
-  base: mode === "gh-pages" ? "/zenuml-core/" : "/",
+  base: "/",
   build: {
     rollupOptions: {
-      input: ["index.html", "embed.html", ...cypressHtmlFiles],
+      input: [resolve(__dirname, "index.html")],
     },
   },
   resolve: {
