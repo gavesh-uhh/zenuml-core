@@ -17,7 +17,7 @@
   </div>
   <div v-else>
     <div
-      class="participant bg-skin-participant shadow-participant border-skin-participant text-skin-participant rounded text-base leading-4 flex flex-col justify-center z-10 h-10 top-8"
+      class="participant bg-skin-participant shadow-participant border-skin-participant text-skin-participant rounded text-base leading-4 flex flex-col justify-center z-10 h-10 top-10"
       :class="{ selected: selected }"
       ref="participant"
       :style="{

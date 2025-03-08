@@ -45,10 +45,10 @@
         />
       </div>
       <div
-        class="footer text-skin-control bg-skin-title px-4 py-1 flex justify-between items-center gap-3 mt-2"
+        class="hide-export footer text-skin-control bg-skin-title px-4 py-1 flex justify-between items-center gap-3 mt-2"
       >
         <template v-if="mode === RenderMode.Dynamic">
-          <div class="flex items-center gap-3 color-base">
+          <div class="flex items-center gap-3 color-base hide-export">
             <button
               class="bottom-1 flex items-center left-1 hide-export"
               @click="showTipsDialog()"
@@ -148,37 +148,20 @@ export default {
         console.error(e);
       }
     },
-    toPng() {
-      return htmlToImage.toPng(this.$refs["export"], {
-        backgroundColor: "white",
-        filter: (node) => {
-          return !node?.classList?.contains("hide-export");
-        },
-      });
-    },
-    toSvg() {
-      return htmlToImage.toSvg(this.$refs["export"], {
-        backgroundColor: "white",
-        filter: (node) => {
-          return !node?.classList?.contains("hide-export");
-        },
-      });
-    },
-    toBlob() {
-      return htmlToImage.toBlob(this.$refs["export"], {
-        backgroundColor: "white",
-        filter: (node) => {
-          return !node?.classList?.contains("hide-export");
-        },
-      });
-    },
     toJpeg() {
-      return htmlToImage.toJpeg(this.$refs["export"], {
-        backgroundColor: "white",
-        filter: (node) => {
-          return !node?.classList?.contains("hide-export");
-        },
-      });
+      htmlToImage
+        .toJpeg(this.$refs["content"], {
+          backgroundColor: "white",
+          filter: (node) => {
+            return !node?.classList?.contains("hide-export");
+          },
+        })
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.download = "diagram.jpeg";
+          link.href = dataUrl;
+          link.click();
+        });
     },
     zoomIn() {
       const newScale = Math.min(1, this.scale + 0.1);
