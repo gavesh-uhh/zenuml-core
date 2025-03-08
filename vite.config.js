@@ -25,7 +25,7 @@ function getCypressHtmlFiles() {
       .filter((file) => file.endsWith(".html"))
       .map((file) => resolve(cypressFolder, file));
   } catch (err) {
-    console.err(err);
+    console.log(err);
     return [];
   }
 }
