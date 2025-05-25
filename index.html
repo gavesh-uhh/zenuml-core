@@ -1,154 +1,439 @@
 <!doctype html>
 <html>
-  <head>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css"
-      integrity="sha512-gFMl3u9d0xt3WR8ZeW05MWm3yZ+ZfgsBVXLSOiFz2xeVrZ8Neg0+V1kkRIo9LikyA/T9HuS91kDfc2XWse0K0A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.1/lib/codemirror.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css"
-      integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <title>Enhanced ZenUML</title>
-    <style>
-      html,
-      body {
-        margin: 0;
-        height: 100%;
-        overflow: hidden;
-      }
-      #container {
-        display: flex;
-        width: 100vw;
-        height: 100vh;
-      }
-      #left {
-        height: 100%;
-        overflow: auto;
-        flex-basis: 30%;
-        flex-grow: 0;
-        flex-shrink: 0;
-      }
-      #divider {
-        width: 5px;
-        background-color: #ccc;
-        cursor: col-resize;
-        height: 100%;
-      }
-      #right {
-        height: 100%;
-        overflow: auto;
-        flex-grow: 1;
-      }
-      #right pre {
-        height: 100%;
-        margin: 0;
-      }
-      .CodeMirror {
-        font-family: monospace;
-        font-size: 13px;
-        height: 100%;
-      }
-      .zenuml .CodeMirror .CodeMirror-cursor {
-        border-color: #000;
-        border-left-width: 1px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="container">
-      <div id="left">
+
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css"
+    integrity="sha512-gFMl3u9d0xt3WR8ZeW05MWm3yZ+ZfgsBVXLSOiFz2xeVrZ8Neg0+V1kkRIo9LikyA/T9HuS91kDfc2XWse0K0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.1/lib/codemirror.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css"
+    integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Enhanced ZenUML</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #container {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #left {
+      height: 100%;
+      overflow: auto;
+      flex-basis: 30%;
+      flex-grow: 0;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Custom scrollbar styling */
+    #left::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #left::-webkit-scrollbar-track {
+      background: #282a36;
+    }
+
+    #left::-webkit-scrollbar-thumb {
+      background: #44475a;
+      border-radius: 4px;
+    }
+
+    #left::-webkit-scrollbar-thumb:hover {
+      background: #6272a4;
+    }
+
+    #divider {
+      width: 5px;
+      background-color: #ccc;
+      cursor: col-resize;
+      height: 100%;
+    }
+
+    #right {
+      height: 100%;
+      overflow: auto;
+      flex-grow: 1;
+    }
+
+    #right pre {
+      margin: 0;
+      padding: 10px;
+      width: 100%;
+      min-height: min-content;
+    }
+
+    .zenuml {
+      display: block;
+      width: 100%;
+    }
+
+    .CodeMirror {
+      font-family: monospace;
+      font-size: 13px;
+      height: 100%;
+    }
+
+    /* Custom scrollbar for CodeMirror */
+    .CodeMirror-scrollbar-filler {
+      background-color: transparent;
+    }
+
+    .CodeMirror-simplescroll-horizontal,
+    .CodeMirror-simplescroll-vertical {
+      background-color: #282a36;
+    }
+
+    .CodeMirror-simplescroll-horizontal div,
+    .CodeMirror-simplescroll-vertical div {
+      background-color: #44475a;
+      border-radius: 4px;
+    }
+
+    .CodeMirror-simplescroll-horizontal div:hover,
+    .CodeMirror-simplescroll-vertical div:hover {
+      background-color: #6272a4;
+    }
+
+    .zenuml .CodeMirror .CodeMirror-cursor {
+      border-color: #000;
+      border-left-width: 1px;
+    }
+
+    /* Add spacing between object boxes and dashed lines */
+    .zenuml .sequence-diagram .lifeline .line {
+      margin-top: 60px;
+    }
+
+    .zenuml .sequence-diagram .lifeline .participant {
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+
+    .zenuml .sequence-diagram .lifeline .participant svg {
+      transform: translateY(-5px);
+    }
+
+    #input-container {
+      display: flex;
+      padding: 10px;
+      gap: 5px;
+      background-color: #282a36;
+    }
+
+    #input-bar {
+      flex-grow: 1;
+      padding: 5px;
+      border: 1px solid #44475a;
+      background-color: #44475a;
+      color: #f8f8f2;
+      border-radius: 4px;
+    }
+
+    #gen-button {
+      padding: 5px 15px;
+      background-color: #6272a4;
+      color: #f8f8f2;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #gen-button:hover {
+      background-color: #7282b4;
+    }
+
+    #editor-container {
+      flex-grow: 1;
+      overflow: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="left">
+      <div id="input-container">
+        <input type="text" id="input-bar" placeholder="Generate with Gemini 2.0">
+        <button id="gen-button">✨</button>
+      </div>
+      <div id="editor-container">
         <textarea id="text"></textarea>
       </div>
-      <div id="divider"></div>
-      <div id="right">
-        <pre class="zenuml"></pre>
-      </div>
     </div>
-    <script type="module">
-      import { waitUntil, debounce } from "./src/utils.ts";
-      import { createConfig } from "./src/config.ts";
+    <div id="divider"></div>
+    <div id="right">
+      <pre class="zenuml"></pre>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.min.js"
+    integrity="sha512-I6CdJdruzGtvDyvdO4YsiAq+pkWf2efgd1ZUSK2FnM/u2VuRASPC7GowWQrWyjxCZn6CT89s3ddGI+be0Ak9Fg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="module">
+    import { waitUntil, debounce } from "./src/utils.ts";
+    import { createConfig } from "./src/config.ts";
+    import { GoogleGenAI } from "@google/genai";
+    import * as htmlToImage from "html-to-image";
 
-      const editor = CodeMirror.fromTextArea(document.getElementById("text"), {
-        lineNumbers: true,
-        singleCursorHeightPerLine: false,
-        theme: "dracula",
+    const editor = CodeMirror.fromTextArea(document.getElementById("text"), {
+      lineNumbers: true,
+      singleCursorHeightPerLine: false,
+      theme: "dracula",
+    });
+
+    const updateDiagram = debounce((content) => {
+      const config = createConfig({
+        onContentChange: (code) => editor.setValue(code),
       });
 
-      const updateDiagram = debounce((content) => {
-        const config = createConfig({
-          onContentChange: (code) => editor.setValue(code),
-        });
-
-        window.zenUml.render(content, config).then((r) => {
-          window.parentLogger
-            .child({ name: "index.html" })
-            .debug("render resolved", r);
-        });
-      }, 100);
-
-      editor.on("change", function (cm) {
-        waitUntil(
-          () => window.zenUml,
-          () => {
-            updateDiagram(cm.getValue());
-            localStorage.setItem("zenuml-cm-code", cm.getValue());
-          },
-        );
+      window.zenUml.render(content, config).then((r) => {
+        window.parentLogger
+          .child({ name: "index.html" })
+          .debug("render resolved", r);
       });
+    }, 100);
 
-      const savedCode = localStorage.getItem("zenuml-cm-code");
-      if (savedCode) {
-        editor.setValue(savedCode);
+    editor.on("change", function (cm) {
+      waitUntil(
+        () => window.zenUml,
+        () => {
+          updateDiagram(cm.getValue());
+          localStorage.setItem("zenuml-cm-code", cm.getValue());
+        },
+      );
+    });
+
+    const savedCode = localStorage.getItem("zenuml-cm-code");
+    if (savedCode) {
+      editor.setValue(savedCode);
+    }
+
+    const ai = new GoogleGenAI({ apiKey: 'AIzaSyD9xKXTIltw146Yl0-hahq0kJvvX2ExRFY' });
+
+    async function generate() {
+      const inputValue = document.getElementById("input-bar").value;
+      try {
+        const systemInstruction = `
+You are a ZenUML Sequence Diagram generator. You MUST follow this syntax EXACTLY.
+Do NOT generate plain text or english responses.
+Do NOT wrap the code in markdown code blocks ("${"```"}").
+ONLY generate valid code without any markdown formatting.
+
+STRICTLY FOLLOW THIS SYNTAX PATTERN:
+1. Always start with 'title' followed by the use case name
+2. Always define participants with @Actor, @Boundary, @Control, @Entity
+3. Use exact arrow syntax: '->' for messages
+4. Use exact method call syntax: 'MethodName()'
+5. Use exact return syntax: '@Return'
+6. Use exact if syntax: 'if(condition = value)'
+7. Use exact nesting with curly braces: '{' and '}'
+8. Use exact indentation pattern as shown in examples
+
+EXAMPLES OF CORRECT SYNTAX:
+
+Example 1 - Simple Flow:
+title Simple Flow
+@Actor User
+@Boundary UI
+@Control Controller
+@Entity Database
+
+User -> UI.Method(){
+  UI -> Controller.Process(){
+    Controller -> Database.Query(){
+      @Return Database -> Controller: Result
+      @Return Controller -> UI: Processed
+    }
+  }
+}
+
+Example 2 - With Condition:
+title Conditional Flow
+@Actor User
+@Boundary UI
+@Control Controller
+@Entity Database
+
+User -> UI.Check(){
+  UI -> Controller.Validate(){
+    Controller -> Database.Verify(){
+      if(Valid = true){
+        @Return Database -> Controller: Valid
+        @Return Controller -> UI: Success
       }
-    </script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.min.js"
-      integrity="sha512-I6CdJdruzGtvDyvdO4YsiAq+pkWf2efgd1ZUSK2FnM/u2VuRASPC7GowWQrWyjxCZn6CT89s3ddGI+be0Ak9Fg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script type="module" src="./src/main.ts"></script>
-    <script>
-      // Resizable divider script
-      const divider = document.getElementById("divider");
-      const left = document.getElementById("left");
+    }
+  }
+}
 
-      divider.addEventListener("mousedown", initDrag, false);
+PRACTICAL USE CASES:
 
-      let startX, startWidth;
-      function initDrag(e) {
-        startX = e.clientX;
-        startWidth = left.offsetWidth;
-        document.documentElement.addEventListener("mousemove", doDrag, false);
-        document.documentElement.addEventListener("mouseup", stopDrag, false);
+Example 3 - User Login:
+title User Login
+@Actor User
+@Boundary LoginUI
+@Control AuthController
+@Entity Database
+
+User -> LoginUI.EnterCredentials(){
+  LoginUI -> AuthController.ValidateCredentials(){
+    AuthController -> Database.CheckUser(){
+      if(UserExists = true){
+        @Return Database -> AuthController: User Found
+        @Return AuthController -> LoginUI: Login Successful
       }
+    }
+  }
+}
 
-      function doDrag(e) {
-        const newWidth = startWidth + e.clientX - startX;
-        left.style.flexBasis = newWidth + "px";
-      }
+Example 4 - Create Order:
+title Create Order
+@Actor Customer
+@Boundary OrderUI
+@Control OrderController
+@Entity Database
 
-      function stopDrag() {
-        document.documentElement.removeEventListener("mousemove", doDrag, false);
-        document.documentElement.removeEventListener("mouseup", stopDrag, false);
+Customer -> OrderUI.SubmitOrder(){
+  OrderUI -> OrderController.ProcessOrder(){
+    OrderController -> Database.SaveOrder(){
+      if(StockAvailable = true){
+        @Return Database -> OrderController: Order Saved
+        @Return OrderController -> OrderUI: Order Confirmed
       }
-    </script>
-  </body>
+    }
+  }
+}
+
+Example 5 - Update Profile:
+title Update Profile
+@Actor User
+@Boundary ProfileUI
+@Control ProfileController
+@Entity Database
+
+User -> ProfileUI.EditProfile(){
+  ProfileUI -> ProfileController.UpdateProfile(){
+    ProfileController -> Database.ValidateData(){
+      if(DataValid = true){
+        ProfileController -> Database.SaveProfile(){
+          @Return Database -> ProfileController: Profile Updated
+          @Return ProfileController -> ProfileUI: Update Successful
+        }
+      }
+    }
+  }
+}
+
+STRICTLY FOLLOW THESE EXAMPLES. DO NOT DEVIATE FROM THE SYNTAX.
+`;
+
+        const response = await ai.models.generateContent({
+          model: "gemini-2.0-flash",
+          contents: inputValue,
+          config: {
+            systemInstruction,
+            temperature: 1.5
+          }
+        });
+
+        let text = response.text;
+        text = text.replace(/```[\s\S]*?\n([\s\S]*?)```/g, '$1');
+        editor.setValue(text.trim());
+        updateDiagram(text.trim());
+      } catch (error) {
+        console.error('Error generating content:', error);
+      }
+    }
+
+    document.getElementById("gen-button").addEventListener("click", generate);
+
+    // Export functionality
+    function toJpeg() {
+      const diagramTitle = document.getElementById("title-bar").textContent;
+      htmlToImage
+        .toJpeg(document.querySelector('.zenuml'), {
+          backgroundColor: "white",
+          quality: 1.0,
+          pixelRatio: 2,
+          filter: (node) => {
+            return !node?.classList?.contains("hide-export");
+          }
+        })
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.download = diagramTitle + ".jpeg";
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((error) => {
+          console.error('Error exporting JPEG:', error);
+        });
+    }
+
+    document.querySelector('.export-jpeg').addEventListener('click', toJpeg);
+  </script>
+  <script type="module" src="./src/main.ts"></script>
+  <script>
+    const divider = document.getElementById("divider");
+    const left = document.getElementById("left");
+
+    divider.addEventListener("mousedown", initDrag, false);
+
+    let startX, startWidth;
+    function initDrag(e) {
+      startX = e.clientX;
+      startWidth = left.offsetWidth;
+      document.documentElement.addEventListener("mousemove", doDrag, false);
+      document.documentElement.addEventListener("mouseup", stopDrag, false);
+    }
+
+    function doDrag(e) {
+      const newWidth = startWidth + e.clientX - startX;
+      left.style.flexBasis = newWidth + "px";
+    }
+
+    function stopDrag() {
+      document.documentElement.removeEventListener("mousemove", doDrag, false);
+      document.documentElement.removeEventListener("mouseup", stopDrag, false);
+    }
+  </script>
+  <script>
+    function toJpeg() {
+      const diagramTitle = document.getElementById("title-bar").textContent;
+      htmlToImage
+        .toJpeg(document.querySelector('.zenuml'), {
+          backgroundColor: "white",
+          quality: 1.0,
+          pixelRatio: 2,
+          filter: (node) => {
+            return !node?.classList?.contains("hide-export");
+          }
+        })
+        .then((dataUrl) => {
+          const link = document.createElement("a");
+          link.download = diagramTitle + ".jpeg";
+          link.href = dataUrl;
+          link.click();
+        })
+        .catch((error) => {
+          console.error('Error exporting JPEG:', error);
+        });
+    }
+  </script>
+</body>
+
 </html>

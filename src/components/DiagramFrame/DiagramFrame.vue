@@ -23,7 +23,7 @@
             <slot></slot>
           </div>
           <div class="right flex-grow flex justify-between">
-            <diagram-title :context="title" />
+            <diagram-title id="title-bar" :context="title" />
             <!-- Knowledge: how to vertically align a svg icon. -->
           </div>
         </div>
@@ -149,6 +149,7 @@ export default {
       }
     },
     toJpeg() {
+      const diagramTitle = document.getElementById("title-bar").textContent;
       htmlToImage
         .toJpeg(this.$refs["content"], {
           backgroundColor: "white",
@@ -158,7 +159,7 @@ export default {
         })
         .then((dataUrl) => {
           const link = document.createElement("a");
-          link.download = "diagram.jpeg";
+          link.download = diagramTitle + ".jpeg";
           link.href = dataUrl;
           link.click();
         });
