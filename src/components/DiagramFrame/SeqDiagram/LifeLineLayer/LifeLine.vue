@@ -11,7 +11,7 @@
       <div
         class="absolute bottom-[-6px] left-[-6px] mx-auto flex-grow w-fit h-fit"
       >
-        <div class="translate-y-1 text-lg font-bold">X</div>
+        <div class="translate-y-4 translate-x-[-2px] text-3xl font-bold">X</div>
       </div>
     </div>
   </div>
