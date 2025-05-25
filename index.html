@@ -521,11 +521,16 @@ STRICTLY FOLLOW THESE EXAMPLES. DO NOT DEVIATE FROM THE SYNTAX.
     // Export functionality
     function toJpeg() {
       const diagramTitle = document.getElementById("title-bar").textContent;
+      const contentElement = document.querySelector('.zenuml');
       htmlToImage
-        .toJpeg(document.querySelector('.zenuml'), {
+        .toJpeg(contentElement, {
           backgroundColor: "white",
           quality: 1.0,
           pixelRatio: 2,
+          style: {
+            transform: 'none',
+            position: 'relative'
+          },
           filter: (node) => {
             return !node?.classList?.contains("hide-export");
           }
@@ -592,11 +597,16 @@ STRICTLY FOLLOW THESE EXAMPLES. DO NOT DEVIATE FROM THE SYNTAX.
   <script>
     function toJpeg() {
       const diagramTitle = document.getElementById("title-bar").textContent;
+      const contentElement = document.querySelector('.zenuml');
       htmlToImage
-        .toJpeg(document.querySelector('.zenuml'), {
+        .toJpeg(contentElement, {
           backgroundColor: "white",
           quality: 1.0,
           pixelRatio: 2,
+          style: {
+            transform: 'none',
+            position: 'relative'
+          },
           filter: (node) => {
             return !node?.classList?.contains("hide-export");
           }

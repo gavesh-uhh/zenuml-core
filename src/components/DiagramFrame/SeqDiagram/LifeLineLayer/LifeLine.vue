@@ -7,13 +7,14 @@
     :style="{ paddingTop: top + 'px', left: left + 'px' }"
   >
     <participant v-if="renderParticipants" :entity="entity" :offsetTop2="top" />
-    <div v-if="renderLifeLine" class="line w0 mx-auto my-5 flex-grow w-px">
+    <div v-if="renderLifeLine" class="line w0 mx-auto my-5 flex-grow w-px relative">
       <div
-        class="absolute bottom-[-6px] left-[-6px] mx-auto flex-grow w-fit h-fit"
+        class="absolute bottom-[-32px] left-1/2 transform -translate-x-1/2 mx-auto flex-grow w-fit h-fit"
       >
-        <div class="translate-y-6 translate-x-[2px] font-mono text-lg font-bold">X</div>
+        <div class="font-mono text-lg font-bold">✕</div>
       </div>
     </div>
+    
   </div>
 </template>
 
