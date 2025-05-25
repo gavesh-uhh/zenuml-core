@@ -17,21 +17,6 @@ const packageJson = JSON.parse(
   readFileSync(resolve(__dirname, "package.json"), "utf-8"),
 );
 
-function getCypressHtmlFiles() {
-  const cypressFolder = resolve(__dirname, "cy");
-  try {
-    const files = readdirSync(cypressFolder);
-    return files
-      .filter((file) => file.endsWith(".html"))
-      .map((file) => resolve(cypressFolder, file));
-  } catch (err) {
-    console.log(err);
-    return [];
-  }
-}
-const cypressHtmlFiles = getCypressHtmlFiles();
-console.log(cypressHtmlFiles);
-
 export default defineConfig(({ mode }) => ({
   base: "/",
   build: {

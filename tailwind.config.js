@@ -1,6 +1,6 @@
 module.exports = {
   important: ".zenuml",
-  content: ["./**/*.html", "./src/**/*.vue"],
+  content: ["./templates/**/*.html", "./src/**/*.vue"],
   safelist: [
     // add classes from tailwind.css
     "theme-default",

@@ -384,7 +384,12 @@ STRICTLY FOLLOW THESE EXAMPLES. DO NOT DEVIATE FROM THE SYNTAX.
         });
     }
 
-    document.querySelector('.export-jpeg').addEventListener('click', toJpeg);
+    let selection = document.querySelector('.export-jpeg') !== null;
+    if (selection) {
+      document.querySelector('.export-jpeg').addEventListener('click', toJpeg);
+    } else {
+      console.log("Editor window possibly still loading...");
+    }
   </script>
   <script type="module" src="./src/main.ts"></script>
   <script>
