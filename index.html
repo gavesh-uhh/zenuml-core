@@ -379,7 +379,7 @@
       editor.setValue(savedCode);
     }
 
-    const ai = new GoogleGenAI({ apiKey: 'AIzaSyD9xKXTIltw146Yl0-hahq0kJvvX2ExRFY' });
+    const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GENAI_API_KEY });
 
     async function generate() {
       const inputValue = document.getElementById("input-bar").value;
