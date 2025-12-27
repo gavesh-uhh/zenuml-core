@@ -66,7 +66,12 @@ To use the AI-powered diagram generation feature:
    - Generate an API key
 
 2. **Configure Environment Variables**:
-   Create a `.env` file in the root directory:
+   Copy the `.env.example` file to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Then edit `.env` and add your API key:
    ```bash
    VITE_GENAI_API_KEY=your_api_key_here
    ```
@@ -308,8 +313,16 @@ zenuml-core/
 ### API Key Management
 - ✅ API keys are stored in environment variables, not in code
 - ✅ `.env` file is gitignored to prevent accidental commits
+- ✅ `.env.example` template provided for easy setup
 - ⚠️ **Important**: Always use environment variables for sensitive data
 - ⚠️ Never share your `.env` file or API keys publicly
+
+### Security Improvements in This Fork
+- **Fixed**: Removed hardcoded API key from source code (replaced with environment variable)
+- **Fixed**: Added .env to .gitignore to prevent future API key exposure
+- **Added**: .env.example template for safe configuration
+
+⚠️ **Note**: If you cloned this repository before the security fix, the old .env file with the API key may have been exposed. Please rotate your API keys if you were affected.
 
 ### XSS Protection
 - Uses DOMPurify to sanitize user-generated content
