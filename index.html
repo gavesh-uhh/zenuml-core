@@ -52,8 +52,13 @@
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     #loading-page h1 {
@@ -308,7 +313,6 @@
       font-family: Arial, Helvetica, sans-serif;
       color: white;
     }
-
   </style>
 </head>
 
@@ -330,7 +334,7 @@
       <div id="editor-container">
         <textarea id="text"></textarea>
       </div>
- 
+
     </div>
     <div id="divider"></div>
     <div id="right">
@@ -341,9 +345,9 @@
     integrity="sha512-I6CdJdruzGtvDyvdO4YsiAq+pkWf2efgd1ZUSK2FnM/u2VuRASPC7GowWQrWyjxCZn6CT89s3ddGI+be0Ak9Fg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script type="module">
-    import { waitUntil, debounce } from "./src/utils.ts";
-    import { createConfig } from "./src/config.ts";
-    import { GoogleGenAI } from "@google/genai";
+    import {waitUntil, debounce} from "./src/utils.ts";
+    import {createConfig} from "./src/config.ts";
+    import {GoogleGenAI} from "@google/genai";
     import * as htmlToImage from "html-to-image";
 
     const editor = CodeMirror.fromTextArea(document.getElementById("text"), {
@@ -359,7 +363,7 @@
 
       window.zenUml.render(content, config).then((r) => {
         window.parentLogger
-          .child({ name: "index.html" })
+          .child({name: "index.html"})
           .debug("render resolved", r);
       });
     }, 100);
@@ -379,7 +383,7 @@
       editor.setValue(savedCode);
     }
 
-    const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GENAI_API_KEY });
+    const ai = new GoogleGenAI({apiKey: import.meta.env.VITE_GENAI_API_KEY});
 
     async function generate() {
       const inputValue = document.getElementById("input-bar").value;
@@ -499,11 +503,11 @@ STRICTLY FOLLOW THESE EXAMPLES. DO NOT DEVIATE FROM THE SYNTAX.
 `;
 
         const response = await ai.models.generateContent({
-          model: "gemini-2.0-flash",
+          model: "gemini-2.5-flash",
           contents: inputValue,
           config: {
             systemInstruction,
-            temperature: 1.5
+            temperature: 1.75
           }
         });
 
