@@ -30,6 +30,7 @@ src/generated-parser/sequenceParser.interp
 src/generated-parser/sequenceLexer.interp
 
 # local env files
+.env
 .env.local
 .env.*.local
 
